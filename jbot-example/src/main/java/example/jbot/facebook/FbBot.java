@@ -66,10 +66,11 @@ public class FbBot extends Bot {
     public void onGetStarted(Event event) {
         // quick reply buttons
         Button[] quickReplies = new Button[]{
-                new Button().setContentType("text").setTitle("Sure").setPayload("yes"),
-                new Button().setContentType("text").setTitle("Nope").setPayload("no")
+                new Button().setType("web_url").setUrl("https://line-h5.sioeye.com").setTitle("buy videos"),
+//                 new Button().setContentType("text").setTitle("Sure").setPayload("yes"),
+//                 new Button().setContentType("text").setTitle("Nope").setPayload("no")
         };
-        reply(event, new Message().setText("Hello, I am JBot. Would you like to see more?").setQuickReplies(quickReplies));
+        reply(event, new Message().setText("Hello, I am Sioeye. Would you like to buy some videos").setQuickReplies(quickReplies));
     }
 
     /**
