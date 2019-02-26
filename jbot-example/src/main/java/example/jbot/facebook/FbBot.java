@@ -65,12 +65,18 @@ public class FbBot extends Bot {
     @Controller(events = {EventType.MESSAGE, EventType.POSTBACK}, pattern = "^(?i)(hi|hello|hey)$")
     public void onGetStarted(Event event) {
         // quick reply buttons
-        Button[] quickReplies = new Button[]{
-                new Button().setType("web_url").setUrl("https://line-h5.sioeye.com").setTitle("buy videos"),
-//                 new Button().setContentType("text").setTitle("Sure").setPayload("yes"),
-//                 new Button().setContentType("text").setTitle("Nope").setPayload("no")
-        };
-        reply(event, new Message().setText("Hello, I am Sioeye. Would you like to buy some videos").setQuickReplies(quickReplies));
+//         Button[] quickReplies = new Button[]{
+//                 new Button().setType("web_url").setUrl("https://line-h5.sioeye.com").setTitle("buy videos")
+//                  new Button().setContentType("text").setTitle("Sure").setPayload("yes"),
+//                  new Button().setContentType("text").setTitle("Nope").setPayload("no")
+//         };
+//          reply(event, new Message().setText("Hello, I am Sioeye. Would you like to buy some videos").setQuickReplies(quickReplies));
+           Button[] buttons = new Button[]{
+                new Button().setType("web_url").setUrl("https://line-h5.sioeye.com").setTitle("JBot Docs")
+//                 new Button().setType("web_url").setUrl("https://goo.gl/uKrJWX").setTitle("Buttom Template")
+           };
+        reply(event, new Message().setAttachment(new Attachment().setType("template").setPayload(new Payload()
+                .setTemplateType("button").setText("tap to buy some videos").setButtons(buttons))));
     }
 
     /**
