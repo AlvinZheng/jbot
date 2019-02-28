@@ -73,7 +73,7 @@ public class FbBot extends Bot {
 //         };
 //          reply(event, new Message().setText("Hello, I am Sioeye. Would you like to buy some videos").setQuickReplies(quickReplies));
            Button[] buttons = new Button[]{
-                new Button().setType("web_url").setUrl("https://line-h5.sioeye.com").setTitle("JBot Docs")
+                new Button().setType("web_url").setUrl("https://h5.ds.odube.com/dist").setTitle("view videos")
 //                 new Button().setType("web_url").setUrl("https://goo.gl/uKrJWX").setTitle("Buttom Template")
            };
         reply(event, new Message().setAttachment(new Attachment().setType("template").setPayload(new Payload()
