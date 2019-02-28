@@ -62,6 +62,8 @@ public class Event {
     private Payload[] greeting;
     private EventType type;
 
+    private String sendVideoUrl;
+
     public User getSender() {
         return sender;
     }
@@ -305,4 +307,14 @@ public class Event {
             return null;
         }
     }
+
+    public String getSendVideoUrl() {
+        return sendVideoUrl;
+    }
+
+    public Event setSendVideoUrl(String url) {
+        this.sendVideoUrl = url;
+        return this;
+    }
+
 }

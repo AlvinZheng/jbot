@@ -153,6 +153,12 @@ public class FbBot extends Bot {
         reply(event, new Message().setAttachment(new Attachment().setType("video").setPayload(new Payload().setUrl("https://cdn.glitch.com/febce45f-f238-4768-8b8b-4c65a2eaed62%2Fyouyou.mp4?1547624481287"))));
     }
 
+    @Controller(events = EventType.SEND_VIDEO)
+    public void sendSearchedVideo(Event event) {
+        System.out.println("received sendvideo request");
+        reply(event, new Message().setAttachment(new Attachment().setType("video").setPayload(new Payload().setUrl(event.getSendVideoUrl()))));
+    }
+
     // Conversation feature of JBot
 
     /**

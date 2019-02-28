@@ -23,7 +23,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Queue;
 import java.util.regex.Matcher;
-
+import java.util.Map;
 /**
  * @author ramswaroop
  * @version 11/09/2016
@@ -141,6 +141,65 @@ public abstract class Bot extends BaseBot {
         return ResponseEntity.ok("EVENT_RECEIVED");
     }
 
+    /**
+     * Add sendvideo endpoint
+     *
+     * @param reqMap
+     * @return 200 OK response
+     */
+    @ResponseBody
+    @PostMapping("/sendVideo")
+    public final ResponseEntity setupSendVideoEndpoint(@RequestBody Map<String,Object> reqMap) {
+        String uid = reqMap.get("id").toString();
+        String url = reqMap.get("url").toString();
+        Event event = new Event().setSender(new User().setId(uid)).setSendVideoUrl(url).setType(EventType.SEND_VIDEO);
+        invokeSendVideoMethods(event);
+        //reply(event, new Message().setAttachment(new Attachment().setType("video").setPayload(new Payload().setUrl("https://cdn.glitch.com/febce45f-f238-4768-8b8b-4c65a2eaed62%2Fyouyou.mp4?1547624481287"))));
+        return ResponseEntity.ok("received");
+    }
+
+    /**
+     * Add sendvideo endpoint
+     *
+     * @param id,url
+     * @return 200 OK response
+     */
+    @ResponseBody
+    @GetMapping("/sendVideo")
+    public final ResponseEntity setupSendVideo(String id, String url) {
+//        String uid = reqMap.get("id").toString();
+//        String url = reqMap.get("url").toString();
+        Event event = new Event().setSender(new User().setId(id)).setSendVideoUrl(url).setType(EventType.SEND_VIDEO);
+        invokeSendVideoMethods(event);
+        //reply(event, new Message().setAttachment(new Attachment().setType("video").setPayload(new Payload().setUrl("https://cdn.glitch.com/febce45f-f238-4768-8b8b-4c65a2eaed62%2Fyouyou.mp4?1547624481287"))));
+        return ResponseEntity.ok("received");
+    }
+
+    private void invokeSendVideoMethods(Event event) {
+        try {
+            List<MethodWrapper> methodWrappers = eventToMethodsMap.get(event.getType().name().toUpperCase());
+            if (methodWrappers == null) return;
+
+//            methodWrappers = new ArrayList<>(methodWrappers);
+//            MethodWrapper matchedMethod =
+//                    getMethodWithMatchingPatternAndFilterUnmatchedMethods(getPatternFromEventType(event), methodWrappers);
+//            if (matchedMethod != null) {
+//                methodWrappers = new ArrayList<>();
+//                methodWrappers.add(matchedMethod);
+//            }
+
+            for (MethodWrapper methodWrapper : methodWrappers) {
+                Method method = methodWrapper.getMethod();
+                if (Arrays.asList(method.getParameterTypes()).contains(Matcher.class)) {
+                    method.invoke(this, event, methodWrapper.getMatcher());
+                } else {
+                    method.invoke(this, event);
+                }
+            }
+        } catch (Exception e) {
+            logger.error("Error invoking controller: ", e);
+        }
+    }
     private void sendTypingOnIndicator(User recipient) {
         restTemplate.postForEntity(fbSendUrl,
                 new Event().setRecipient(recipient).setSenderAction("typing_on"), Response.class);
