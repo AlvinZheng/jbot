@@ -21,16 +21,6 @@ import javax.validation.constraints.Null;
 @JBot
 @Profile("facebook")
 public class FbBot extends Bot {
-    private String tempUid = "";
-
-    public String getTempUid() {
-        return tempUid;
-    }
-
-    public void setTempUid(String tempUid) {
-        this.tempUid = tempUid;
-    }
-
     /**
      * Set this property in {@code application.properties}.
      */
@@ -161,17 +151,12 @@ public class FbBot extends Bot {
 
     @Controller(events = EventType.MESSAGE, pattern = "(buy)")
     public void sendVideo(Event event) {
-        setTempUid(event.getSender().getId());
         reply(event, new Message().setAttachment(new Attachment().setType("video").setPayload(new Payload().setUrl("https://cdn.glitch.com/febce45f-f238-4768-8b8b-4c65a2eaed62%2Fyouyou.mp4?1547624481287"))));
     }
 
     @Controller(events = EventType.SEND_VIDEO)
     public void sendSearchedVideo(Event event) {
         System.out.println("received sendvideo request");
-        String uid = getTempUid();
-        if (uid == "") {return;}
-        User u = event.getSender().setId(uid);
-        event.setSender(u);
         reply(event, new Message().setAttachment(new Attachment().setType("video").setPayload(new Payload().setUrl(event.getSendVideoUrl()))));
     }
 
