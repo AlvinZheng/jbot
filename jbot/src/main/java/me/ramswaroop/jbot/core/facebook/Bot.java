@@ -144,36 +144,37 @@ public abstract class Bot extends BaseBot {
     /**
      * Add sendvideo endpoint
      *
-     * @param reqMap
+     * @param param
      * @return 200 OK response
      */
     @ResponseBody
-    @PostMapping("/sendVideo")
-    public final ResponseEntity setupSendVideoEndpoint(@RequestBody Map<String,Object> reqMap) {
-        String uid = reqMap.get("id").toString();
-        String url = reqMap.get("url").toString();
+    @RequestMapping(value = "/sendVideo", method = RequestMethod.POST, headers = "content-type=application/x-www-form-urlencoded")
+    public final ResponseEntity setupSendVideoEndpoint(@RequestParam Map<String, Object> param) {
+        String uid = param.get("id").toString();
+        String url = param.get("url").toString();
+        logger.info("id:"+uid + ",url:"+ url);
         Event event = new Event().setSender(new User().setId(uid)).setSendVideoUrl(url).setType(EventType.SEND_VIDEO);
         invokeSendVideoMethods(event);
         //reply(event, new Message().setAttachment(new Attachment().setType("video").setPayload(new Payload().setUrl("https://cdn.glitch.com/febce45f-f238-4768-8b8b-4c65a2eaed62%2Fyouyou.mp4?1547624481287"))));
-        return ResponseEntity.ok("received");
+        return ResponseEntity.ok("ok");
     }
 
-    /**
-     * Add sendvideo endpoint
-     *
-     * @param id,url
-     * @return 200 OK response
-     */
-    @ResponseBody
-    @GetMapping("/sendVideo")
-    public final ResponseEntity setupSendVideo(String id, String url) {
-//        String uid = reqMap.get("id").toString();
-//        String url = reqMap.get("url").toString();
-        Event event = new Event().setSender(new User().setId(id)).setSendVideoUrl(url).setType(EventType.SEND_VIDEO);
-        invokeSendVideoMethods(event);
-        //reply(event, new Message().setAttachment(new Attachment().setType("video").setPayload(new Payload().setUrl("https://cdn.glitch.com/febce45f-f238-4768-8b8b-4c65a2eaed62%2Fyouyou.mp4?1547624481287"))));
-        return ResponseEntity.ok("received");
-    }
+//    /**
+//     * Add sendvideo endpoint
+//     *
+//     * @param id,url
+//     * @return 200 OK response
+//     */
+//    @ResponseBody
+//    @GetMapping("/sendVideo")
+//    public final ResponseEntity setupSendVideo(String id, String url) {
+////        String uid = reqMap.get("id").toString();
+////        String url = reqMap.get("url").toString();
+//        Event event = new Event().setSender(new User().setId(id)).setSendVideoUrl(url).setType(EventType.SEND_VIDEO);
+//        invokeSendVideoMethods(event);
+//        //reply(event, new Message().setAttachment(new Attachment().setType("video").setPayload(new Payload().setUrl("https://cdn.glitch.com/febce45f-f238-4768-8b8b-4c65a2eaed62%2Fyouyou.mp4?1547624481287"))));
+//        return ResponseEntity.ok("received");
+//    }
 
     private void invokeSendVideoMethods(Event event) {
         try {
