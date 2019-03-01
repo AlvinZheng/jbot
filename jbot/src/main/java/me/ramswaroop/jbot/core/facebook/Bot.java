@@ -149,7 +149,7 @@ public abstract class Bot extends BaseBot {
      */
     @ResponseBody
     @RequestMapping(value = "/sendVideo", method = RequestMethod.POST, headers = "content-type=application/x-www-form-urlencoded")
-    public final ResponseEntity setupSendVideoEndpoint(String id, String url) {
+    public final ResponseEntity setupSendVideoEndpoint(@RequestParam String id, @RequestParam String url) {
 //        String uid = param.get("id").toString();
 //        String url = param.get("url").toString();
         logger.info("id:"+id + ",url:"+ url);
