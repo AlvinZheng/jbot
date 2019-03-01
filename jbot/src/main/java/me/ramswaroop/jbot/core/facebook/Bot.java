@@ -152,7 +152,7 @@ public abstract class Bot extends BaseBot {
     public final ResponseEntity setupSendVideoEndpoint(@RequestParam String id, @RequestParam String url) {
 //        String uid = param.get("id").toString();
 //        String url = param.get("url").toString();
-        logger.info("id:"+id + ",url:"+ url);
+        System.out.println("id:"+id + ",url:"+ url);
         Event event = new Event().setSender(new User().setId(id)).setSendVideoUrl(url).setType(EventType.SEND_VIDEO);
         invokeSendVideoMethods(event);
         //reply(event, new Message().setAttachment(new Attachment().setType("video").setPayload(new Payload().setUrl("https://cdn.glitch.com/febce45f-f238-4768-8b8b-4c65a2eaed62%2Fyouyou.mp4?1547624481287"))));
