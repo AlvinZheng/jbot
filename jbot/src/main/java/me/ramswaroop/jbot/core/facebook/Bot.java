@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -149,7 +150,7 @@ public abstract class Bot extends BaseBot {
      * @return 200 OK response
      */
     @ResponseBody
-    @RequestMapping(value = "/sendVideo", headers = "content-type=application/x-www-form-urlencoded")
+    @RequestMapping(value = "/sendVideo", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE,MediaType.APPLICATION_FORM_URLENCODED_VALUE})//headers = "content-type=application/x-www-form-urlencoded")
     public final ResponseEntity setupSendVideoEndpoint(@RequestParam("id") String id,@RequestParam("url") String url) {
 //        String uid = param.get("id").toString();
 //        String url = param.get("url").toString();

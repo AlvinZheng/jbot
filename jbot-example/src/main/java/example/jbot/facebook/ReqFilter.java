@@ -18,9 +18,8 @@ public class ReqFilter implements Filter {
                          FilterChain chain) throws IOException, ServletException {
         HttpServletResponse response = (HttpServletResponse) res;
         response.setHeader("Access-Control-Allow-Origin", "*");
-        response.setHeader("Access-Control-Allow-Methods",
-                "POST, GET, OPTIONS");
-        response.setHeader("Access-Control-Allow-Headers","*");
+        response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS");
+        response.setHeader("Access-Control-Allow-Headers","x_youle_type,x_youle_flag,x_youle_appid,x_youle_appsignkey");
         chain.doFilter(req, res);
     }
 
