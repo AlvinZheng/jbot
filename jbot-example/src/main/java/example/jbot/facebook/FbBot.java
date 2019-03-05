@@ -61,7 +61,7 @@ public class FbBot extends Bot {
      * hi, hello or hey. When it is the former, the event type is {@code EventType.POSTBACK} with the payload "hi"
      * and when latter, the event type is {@code EventType.MESSAGE}.
      *
-     * @param event
+     * @param event //"https://h5.ds.odube.com/dist?t="+t
      */
     @Controller(events = {EventType.MESSAGE, EventType.POSTBACK}, pattern = "^(?i)(hi|hello|hey)$")
     public void onGetStarted(Event event) {
@@ -74,7 +74,7 @@ public class FbBot extends Bot {
 //          reply(event, new Message().setText("Hello, I am Sioeye. Would you like to buy some videos").setQuickReplies(quickReplies));
         long t = System.currentTimeMillis();
         Button[] buttons = new Button[]{
-                new Button().setType("web_url").setUrl("https://h5.ds.odube.com/dist?t=" + t).setTitle("view videos").setMessengerExtensions(true)
+                new Button().setType("web_url").setUrl("https://ppdemo-h5.sioeye.com/paynoReturn").setTitle("Paypal test").setMessengerExtensions(true)
 //                 new Button().setType("web_url").setUrl("https://goo.gl/uKrJWX").setTitle("Buttom Template")
         };
         reply(event, new Message().setAttachment(new Attachment().setType("template").setPayload(new Payload()
