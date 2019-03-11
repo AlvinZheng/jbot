@@ -7,8 +7,16 @@ import me.ramswaroop.jbot.core.facebook.Bot;
 import me.ramswaroop.jbot.core.facebook.models.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.validation.constraints.Null;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
 
 /**
  * A simple Facebook Bot. You can create multiple bots by just
@@ -32,6 +40,20 @@ public class FbBot extends Bot {
      */
     @Value("${fbPageAccessToken}")
     private String pageAccessToken;
+
+    /**
+     * Set this property in {@code application.properties}.
+     */
+    @Value("${fbEntryUrl}")
+    private  String entryUrl;
+
+    public String getEntryUrl() {
+        return entryUrl;
+    }
+
+    public void setEntryUrl(String entryUrl) {
+        this.entryUrl = entryUrl;
+    }
 
     @Override
     public String getFbToken() {
@@ -74,7 +96,7 @@ public class FbBot extends Bot {
 //          reply(event, new Message().setText("Hello, I am Sioeye. Would you like to buy some videos").setQuickReplies(quickReplies));
         long t = System.currentTimeMillis();
         Button[] buttons = new Button[]{
-                new Button().setType("web_url").setUrl("https://h5.ds.odube.com/dist?t="+t ).setTitle("Paypal test").setMessengerExtensions(true)
+                new Button().setType("web_url").setUrl(entryUrl+"?t="+t ).setTitle("Paypal test").setMessengerExtensions(true)
 //                 new Button().setType("web_url").setUrl("https://goo.gl/uKrJWX").setTitle("Buttom Template")
         };
         reply(event, new Message().setAttachment(new Attachment().setType("template").setPayload(new Payload()
@@ -159,6 +181,35 @@ public class FbBot extends Bot {
     public void sendSearchedVideo(Event event) {
         System.out.println("received sendvideo request");
         reply(event, new Message().setAttachment(new Attachment().setType("video").setPayload(new Payload().setUrl(event.getSendVideoUrl()))));
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "updateEntryUrl")
+    public final ResponseEntity updateEntry(@RequestParam("url") String url) {
+        Properties prop = new Properties();
+        InputStream in = getClass().getResourceAsStream("application.properties");
+        try {
+            prop.load(in);
+            prop.setProperty("entryUrl", url);
+
+        } catch (IOException io) {
+            io.printStackTrace();
+        } finally {
+            try {
+                prop.store(new FileOutputStream("application.propertie"), null);
+                System.out.println(" entry url changed to:"+ url);
+                this.setEntryUrl(url);
+                return ResponseEntity.ok(" entry url changed to:"+ url);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                return ResponseEntity.ok(" entry url change failed:"+ url);
+            }
+        }
+    }
+    @ResponseBody
+    @RequestMapping(value = "entryUrl")
+    public final ResponseEntity queryEntry() {
+        return ResponseEntity.ok(" entry url:"+ this.entryUrl);
     }
 }
 /*
