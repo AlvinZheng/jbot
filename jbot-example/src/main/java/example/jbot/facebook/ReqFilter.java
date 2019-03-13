@@ -19,7 +19,7 @@ public class ReqFilter implements Filter {
         HttpServletResponse response = (HttpServletResponse) res;
         response.setHeader("Access-Control-Allow-Origin", "*");
         response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS");
-        response.setHeader("Access-Control-Allow-Headers","content-type,x_youle_type,x_youle_flag,x_youle_appid,x_youle_appsignkey");
+        response.setHeader("Access-Control-Allow-Headers","content-type,x_youle_type,x_youle_flag,x_youle_appid,x_youle_appsignkey,cache-control,pragma");
         chain.doFilter(req, res);
     }
 
