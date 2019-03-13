@@ -96,7 +96,7 @@ public class FbBot extends Bot {
 //          reply(event, new Message().setText("Hello, I am Sioeye. Would you like to buy some videos").setQuickReplies(quickReplies));
         long t = System.currentTimeMillis();
         Button[] buttons = new Button[]{
-                new Button().setType("web_url").setUrl(entryUrl+"?t="+t ).setTitle("Paypal test").setMessengerExtensions(true)
+                new Button().setType("web_url").setUrl(entryUrl).setTitle("Paypal test").setMessengerExtensions(true)
 //                 new Button().setType("web_url").setUrl("https://goo.gl/uKrJWX").setTitle("Buttom Template")
         };
         reply(event, new Message().setAttachment(new Attachment().setType("template").setPayload(new Payload()
