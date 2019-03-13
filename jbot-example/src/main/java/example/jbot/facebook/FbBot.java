@@ -196,7 +196,7 @@ public class FbBot extends Bot {
             io.printStackTrace();
         } finally {
             try {
-                prop.store(new FileOutputStream("application.propertie"), null);
+                prop.store(new FileOutputStream("application.properties"), null);
                 System.out.println(" entry url changed to:"+ url);
                 this.setEntryUrl(url);
                 return ResponseEntity.ok(" entry url changed to:"+ url);
