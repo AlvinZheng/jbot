@@ -151,9 +151,9 @@ public abstract class Bot extends BaseBot {
      */
     @ResponseBody
     @RequestMapping(value = "/sendVideo", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE,MediaType.APPLICATION_FORM_URLENCODED_VALUE})//headers = "content-type=application/x-www-form-urlencoded")
-    public final ResponseEntity setupSendVideoEndpoint(@RequestParam("id") String id,@RequestParam("url") String url) {
-//        String uid = param.get("id").toString();
-//        String url = param.get("url").toString();
+    public final ResponseEntity setupSendVideoEndpoint(@RequestBody Map<String, String> param ){
+        String id = param.get("id");
+        String url = param.get("url");
         System.out.println(" send vido parameter id:"+id + ",url:"+ url);
         final Event event = new Event().setSender(new User().setId(id)).setSendVideoUrl(url).setType(EventType.SEND_VIDEO);
         Thread t = new Thread(new Runnable() {
