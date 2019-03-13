@@ -151,7 +151,7 @@ public abstract class Bot extends BaseBot {
      */
     @ResponseBody
     @RequestMapping(value = "/sendVideo", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE,MediaType.APPLICATION_FORM_URLENCODED_VALUE})//headers = "content-type=application/x-www-form-urlencoded")
-    public final ResponseEntity setupSendVideoEndpoint(@RequestBody Map<String, String> param ){
+    public final FbResponse setupSendVideoEndpoint(@RequestBody Map<String, String> param ){
         String id = param.get("id");
         String url = param.get("url");
         System.out.println(" send vido parameter id:"+id + ",url:"+ url);
@@ -163,8 +163,12 @@ public abstract class Bot extends BaseBot {
             }
         });
         t.start();
+        FbResponse res = new FbResponse();
+        res.setSuccess(true);
+        res.setMessage("ok");
+        return res;
         //reply(event, new Message().setAttachment(new Attachment().setType("video").setPayload(new Payload().setUrl("https://cdn.glitch.com/febce45f-f238-4768-8b8b-4c65a2eaed62%2Fyouyou.mp4?1547624481287"))));
-        return ResponseEntity.ok("ok");
+        //return ResponseEntity.ok();
     }
 
 
