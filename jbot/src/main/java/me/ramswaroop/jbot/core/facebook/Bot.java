@@ -110,7 +110,7 @@ public abstract class Bot extends BaseBot {
                             } else {
                                 event.setType(EventType.MESSAGE);
                                 // send typing on indicator to create a conversational experience
-//                                sendTypingOnIndicator(event.getSender());
+                                sendTypingOnIndicator(event.getSender());
                             }
                         } else if (event.getDelivery() != null) {
                             event.setType(EventType.MESSAGE_DELIVERED);
